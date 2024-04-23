@@ -37,12 +37,31 @@ router.put(
 router.get(
   "/:userId",
   async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.userId;
     try {
-      const user = await User.findById(req.params.userId);
+      const user = await User.findById(userId);
       if (!user) {
         throw new CustomError(404, "User not found!");
       }
       res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
+//DELETE USER ROUTE
+router.delete(
+  "/delete/:userId",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = req.params.userId;
+    try {
+      const userToDelete = await User.findById(userId);
+      if (!userToDelete) {
+        throw new CustomError(404, "User not found!");
+      }
+      await userToDelete.deleteOne();
+      res.status(200).json({ message: "User deleted successfully!" });
     } catch (error) {
       next(error);
     }
