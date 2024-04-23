@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import User from "../models/User";
 import bcrypt from "bcrypt";
 import { CustomError } from "../middleware/error";
@@ -58,4 +58,33 @@ router.post(
   }
 );
 
+//LOGOUT ROUTE
+
+router.get("/logout", (req: Request, res: Response, next: NextFunction) => {
+  try {
+    res
+      .clearCookie("token", { sameSite: "none", secure: true })
+      .status(200)
+      .json("Logged out successfully");
+  } catch (error) {
+    next(error);
+  }
+});
+
+//FETCH CURRENT USER ROUTE
+router.get(
+  "/refetch",
+  async (req: Request, res: Response, next: NextFunction) => {
+    const token = req.cookies.token;
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+      const id = (decoded as JwtPayload)._id;
+      const user = await User.findById(id);
+
+      res.status(200).json(user);
+    } catch (error) {
+      next(error);
+    }
+  }
+);
 export default router;
