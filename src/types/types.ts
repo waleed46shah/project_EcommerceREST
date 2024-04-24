@@ -42,12 +42,12 @@ export type WishlistType = mongoose.Document & {
   }[];
 };
 
-export type AddressType = mongoose.Document & {
-  name: mongoose.Types.ObjectId;
-  street: string;
+export type AddressType = {
+  user: mongoose.Types.ObjectId;
+  addressLine1: string;
+  addressLine2: string;
   city: string;
   state: string;
   country: string;
-  zipCode: string;
-  phone: string;
+  postalCode: string;
 };

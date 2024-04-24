@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 import { AddressType } from "../types/types";
 
-const AddressSchema = new mongoose.Schema({
+const AddressSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User", required: true },
   addressLine1: { type: String, required: true },
   addressLine2: { type: String, required: false },
