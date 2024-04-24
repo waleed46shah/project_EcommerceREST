@@ -1,6 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
 import Product from "../models/Product";
-import { CustomError } from "../middleware/error";
 
 const router = express.Router();
 
