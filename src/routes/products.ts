@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import Product from "../models/Product";
+import { CustomError } from "../middleware/error";
 
 const router = express.Router();
 
@@ -35,5 +36,15 @@ router.get(
     }
   }
 );
+
+// GET ALL PRODUCTS ROUTE
+router.get("/", async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const products = await Product.find();
+    res.status(200).json(products);
+  } catch (error) {
+    next(error);
+  }
+});
 
 export default router;
