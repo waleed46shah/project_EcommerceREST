@@ -7,6 +7,7 @@ import productRoute from "./routes/products";
 import addressRoute from "./routes/addresses";
 import orderRoute from "./routes/orders";
 import cartRoute from "./routes/carts";
+import wishlistRoute from "./routes/wishlists";
 
 import { errorHandler } from "./middleware/error";
 import cookieParser from "cookie-parser";
@@ -24,6 +25,7 @@ app.use("/api/product/", productRoute);
 app.use("/api/address/", addressRoute);
 app.use("/api/order/", orderRoute);
 app.use("/api/cart/", cartRoute);
+app.use("/api/wishlist", wishlistRoute);
 
 app.use(errorHandler);
 
