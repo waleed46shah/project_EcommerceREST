@@ -70,7 +70,9 @@ router.get(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userId = req.params.userId;
-      const cart = await Cart.findOne({ user: userId });
+      const cart = await (
+        await Cart.findOne({ user: userId })
+      ).populate("products.product");
       if (!cart) {
         throw new CustomError(404, "Cart is empty!");
       }
