@@ -48,4 +48,26 @@ router.get(
   }
 );
 
+//REMOVE PRODUCT FROM WISHLIST ROUTE
+router.post(
+  "/remove",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { userId, productId } = req.body;
+      const wishlist = await WishList.findOne({ user: userId });
+      if (!wishlist) {
+        throw new CustomError(404, "Wishlist not found!");
+      }
+
+      wishlist.products = wishlist.products.filter(
+        (item) => item.product.toString() !== productId
+      );
+      await wishlist.save();
+      res.status(200).json({ message: "Product removed from wishlist!" });
+    } catch (error) {
+      next(error);
+    }
+  }
+);
+
 export default router;

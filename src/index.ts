@@ -22,10 +22,10 @@ app.use(cookieParser());
 app.use("/api/auth", authRoute);
 app.use("/api/user", verifyToken, userRoute);
 app.use("/api/product/", productRoute);
-app.use("/api/address/", addressRoute);
-app.use("/api/order/", orderRoute);
-app.use("/api/cart/", cartRoute);
-app.use("/api/wishlist", wishlistRoute);
+app.use("/api/address/", verifyToken, addressRoute);
+app.use("/api/order/", verifyToken, orderRoute);
+app.use("/api/cart/", verifyToken, cartRoute);
+app.use("/api/wishlist", verifyToken, wishlistRoute);
 
 app.use(errorHandler);
 
